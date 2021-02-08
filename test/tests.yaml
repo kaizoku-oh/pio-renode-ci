@@ -1,2 +1,2 @@
 - robot:
-    - tests/test-basic.robot
+    - test/test-basic.robot

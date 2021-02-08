@@ -18,6 +18,8 @@ declare -r DOCKER_TEST_RESULTS_PATH=/tmp/test_results
 
 mkdir -p ${HOST_LOG_PATH}
 
+git clone https://github.com/renode/renode.git
+
 docker build -t ${DOCKER_TAG} -f ${HOST_ROOT_DIR}/Dockerfile .
 
 # running in `if` to avoid setting +e

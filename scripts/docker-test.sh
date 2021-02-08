@@ -30,7 +30,7 @@ if ! docker run \
   --volume ${HOST_ROOT_DIR}:${DOCKER_WORKSPACE} \
   --volume ${HOST_TEST_RESULTS_PATH}:${DOCKER_TEST_RESULTS_PATH} \
   --env SCRIPT=${DOCKER_WORKSPACE}/scripts/renode-config.resc \
-  --env RENODE_CHECKOUT=/home/developer/renode \
+  --env RENODE_CHECKOUT=renode \
   --workdir ${DOCKER_WORKSPACE} \
   ${DOCKER_TAG} \
   /bin/bash -c "scripts/run_tests.sh 2>&1 > ${DOCKER_TEST_RESULTS_PATH}/logs.txt"

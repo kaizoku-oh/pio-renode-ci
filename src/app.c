@@ -10,24 +10,27 @@
 #include "usart.h"
 
 
-int main(void) {
-    clock_setup();
-    gpio_setup();
-    usart_setup();
+int main(void)
+{
+  clock_setup();
+  gpio_setup();
+  usart_setup();
 
-    printf("App STARTED\n");
+  printf("App STARTED\n");
 
-    // Configure shell
-    sShellImpl shell_impl = {
-      .send_char = usart_putc,
-    };
-    shell_boot(&shell_impl);
+  /* Configure shell */
+  sShellImpl shell_impl =
+  {
+    .send_char = usart_putc,
+  };
+  shell_boot(&shell_impl);
 
-    char c;
-    while (1) {
-        c = usart_getc();
-        shell_receive_char(c);
-    }
+  char c;
+  while(1)
+  {
+    c = usart_getc();
+    shell_receive_char(c);
+  }
 
-    return 0;
+  return 0;
 }

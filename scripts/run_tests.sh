@@ -8,4 +8,4 @@ pwd
 ls -la
 ls -la ../
 
-${RENODE_CHECKOUT}/test.sh -t "${PWD}/../test/tests.yaml" --variable PWD_PATH:"${PWD}/.." -r "${PWD}/../test_results"
+${RENODE_CHECKOUT}/test.sh -t "${PWD}/test/tests.yaml" --variable PWD_PATH:"${PWD}" -r "${PWD}/test_results"

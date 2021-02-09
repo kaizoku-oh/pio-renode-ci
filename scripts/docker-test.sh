@@ -20,7 +20,9 @@ mkdir -p ${HOST_LOG_PATH}
 
 git clone https://github.com/renode/renode.git --recursive
 pip3 install -r renode/tests/requirements.txt
-/bin/bash renode/build.sh
+cd renode
+/bin/bash build.sh
+cd ..
 
 docker build -t ${DOCKER_TAG} -f ${HOST_ROOT_DIR}/Dockerfile .
 

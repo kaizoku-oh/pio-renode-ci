@@ -18,8 +18,9 @@ declare -r DOCKER_TEST_RESULTS_PATH=/tmp/test_results
 
 mkdir -p ${HOST_LOG_PATH}
 
-git clone https://github.com/renode/renode.git
+git clone https://github.com/renode/renode.git --recursive
 pip3 install -r renode/tests/requirements.txt
+/bin/bash renode/build.sh
 
 docker build -t ${DOCKER_TAG} -f ${HOST_ROOT_DIR}/Dockerfile .
 

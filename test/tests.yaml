@@ -1,2 +1,3 @@
 - robot:
     - test/test-basic.robot
+    # - C:\Users\Bayrem\Documents\PlatformIO\Projects\pio-wolfboot-test\test\test-basic.robot

@@ -2,9 +2,9 @@ name: Renode Automated Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, stm32cube ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, stm32cube ]
 
 jobs:
   build_and_test:

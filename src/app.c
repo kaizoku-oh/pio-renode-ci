@@ -1,35 +1,19 @@
-#include <errno.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <libopencm3/cm3/vector.h>
-#include <libopencm3/stm32/usart.h>
-#include <shell/shell.h>
-
-#include "clock.h"
-#include "gpio.h"
-#include "usart.h"
-
+#include "hal_utils.h"
 
 int main(void)
 {
-  clock_setup();
-  gpio_setup();
-  usart_setup();
+  int i = 0;
+
+  enable_clock();
+  enable_gpios();
+  enable_uart();
+  enable_delay();
 
   printf("App STARTED\n");
-
-  /* Configure shell */
-  sShellImpl shell_impl =
-  {
-    .send_char = usart_putc,
-  };
-  shell_boot(&shell_impl);
-
-  char c;
   while(1)
   {
-    c = usart_getc();
-    shell_receive_char(c);
+    printf("Hello world! %d\r\n", i++);
+    delay_ms(1000);
   }
 
   return 0;

@@ -9,7 +9,7 @@ int main(void)
   enable_uart();
   enable_delay();
 
-  printf("App STARTED\n");
+  printf("App Started\r\n");
   while(1)
   {
     printf("Hello world! %d\r\n", i++);

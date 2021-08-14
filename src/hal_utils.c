@@ -17,6 +17,8 @@ void enable_clock(void)
   /* Enable GPIOD clock for LED & USARTs. */
   rcc_periph_clock_enable(RCC_GPIOD);
   rcc_periph_clock_enable(RCC_GPIOA);
+  /* Enable clocks for USART1. */
+  rcc_periph_clock_enable(RCC_USART1);
   /* Enable clocks for USART2. */
   rcc_periph_clock_enable(RCC_USART2);
 }
@@ -25,6 +27,10 @@ void enable_gpios(void)
 {
   /* Setup GPIO pin GPIO12 on GPIO port D for LED. */
   gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
+  /* Setup GPIO pins for USART1 transmit. */
+  gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO9);
+  /* Setup USART1 TX pin as alternate function. */
+  gpio_set_af(GPIOA, GPIO_AF7, GPIO9);
   /* Setup GPIO pins for USART2 transmit. */
   gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO2);
   /* Setup USART2 TX pin as alternate function. */
@@ -32,6 +38,10 @@ void enable_gpios(void)
   
   /* Setup GPIO pin GPIO12 on GPIO port D for LED. */
   gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
+  /* Setup GPIO pins for USART1 transmit. */
+  gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO9);
+  /* Setup USART1 TX pin as alternate function. */
+  gpio_set_af(GPIOA, GPIO_AF7, GPIO9);
   /* Setup GPIO pins for USART2 transmit. */
   gpio_mode_setup(GPIOA, GPIO_MODE_AF, GPIO_PUPD_NONE, GPIO2);
   /* Setup USART2 TX pin as alternate function. */
@@ -58,6 +68,16 @@ void delay_ms(int ms)
 
 void enable_uart(void)
 {
+  /* Setup USART1 parameters. */
+  usart_set_baudrate(USART1, 115200);
+  usart_set_databits(USART1, 8);
+  usart_set_stopbits(USART1, USART_STOPBITS_1);
+  usart_set_mode(USART1, USART_MODE_TX);
+  usart_set_parity(USART1, USART_PARITY_NONE);
+  usart_set_flow_control(USART1, USART_FLOWCONTROL_NONE);
+  /* Finally enable the USART. */
+  usart_enable(USART1);
+
   /* Setup USART2 parameters. */
   usart_set_baudrate(USART2, 115200);
   usart_set_databits(USART2, 8);
@@ -79,8 +99,10 @@ int _write(int file, char *ptr, int len)
     {
       if(ptr[i] == '\n')
       {
+        usart_send_blocking(USART1, '\r');
         usart_send_blocking(USART2, '\r');
       }
+      usart_send_blocking(USART1, ptr[i]);
       usart_send_blocking(USART2, ptr[i]);
     }
     return i;

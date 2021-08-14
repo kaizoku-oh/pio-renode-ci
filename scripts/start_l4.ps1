@@ -1,4 +1,4 @@
 # $strString = "Hello World"
 # write-host $strString
 
-renode .\renode-config.resc
+renode scripts\renode_l4_config.resc

@@ -1,0 +1,30 @@
+:name: STM32L4 Nucleo Printf
+:description: This script prints the string "Hello world!" on USART1
+
+$name?="STM32L4_Nucleo"
+$bin?=@.pio/build/nucleo_l496zg/firmware.elf
+
+# Create Machine & Load config
+mach create $name
+machine LoadPlatformDescription @scripts/stm32l4a6.repl
+machine LoadPlatformDescription @scripts/add-ccm.repl
+
+# Create a terminal window showing the output of USART1
+showAnalyzer sysbus.usart1
+
+# Create a Telnet connection to the UART
+emulation CreateServerSocketTerminal 33335 "externalUART"
+connector Connect sysbus.usart1 externalUART
+
+# Enable GDB
+machine StartGdbServer 3333
+
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+
+runMacro $reset
+
+# Start without user confirmation
+start
